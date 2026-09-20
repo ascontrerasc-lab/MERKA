@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>MERKA Vendedor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#2B2B2B;--black:#111;--paper:#fff;--cream:#EDE8E1;--sand:#C9BDAF;--gray:#A7A7A7;--line:#e8e3dd;--ok:#dfeee5;--warn:#f5e6d3}
+    *{box-sizing:border-box} body{margin:0;font-family:Montserrat,Arial,sans-serif;background:#f8f6f3;color:var(--ink)}
+    button,input,textarea,select{font:inherit} button{cursor:pointer}
+    .shell{max-width:1180px;margin:auto;min-height:100vh;background:var(--paper);box-shadow:0 0 45px #0000000d}
+    header{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fffc;backdrop-filter:blur(14px);z-index:5}
+    .brand{font-family:"Playfair Display",serif;font-size:28px;letter-spacing:2px;color:var(--black)}
+    .chip{background:var(--cream);border:0;border-radius:999px;padding:9px 14px}
+    main{padding:28px 28px 100px}.hero{background:linear-gradient(135deg,var(--cream),#fff);border:1px solid var(--line);border-radius:26px;padding:28px;display:flex;justify-content:space-between;gap:20px;align-items:center}
+    h1,h2,h3{margin-top:0}h1{font-family:"Playfair Display",serif;font-size:38px;margin-bottom:8px}.muted{color:#777}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:22px 0}
+    .card{border:1px solid var(--line);border-radius:20px;padding:20px;background:#fff}.kpi{font-size:28px;font-weight:700}.btn{border:0;border-radius:999px;padding:12px 18px;background:var(--black);color:#fff;font-weight:600}.btn.light{background:var(--cream);color:var(--black)}.btn.outline{background:#fff;color:var(--black);border:1px solid var(--black)}
+    nav{position:fixed;left:50%;transform:translateX(-50%);bottom:14px;width:min(720px,calc(100% - 24px));background:#111;color:#fff;border-radius:22px;padding:8px;display:grid;grid-template-columns:repeat(7,1fr);gap:4px;z-index:8;box-shadow:0 12px 35px #0003}
+    nav button{background:transparent;color:#ddd;border:0;padding:10px 4px;border-radius:15px;font-size:11px}nav button.active{background:#fff;color:#111}
+    .view{display:none}.view.active{display:block}.section-title{display:flex;align-items:center;justify-content:space-between;margin:26px 0 14px}
+    .list{display:grid;gap:12px}.row{display:flex;align-items:center;justify-content:space-between;gap:14px;border:1px solid var(--line);border-radius:17px;padding:14px}.thumb{width:64px;height:64px;border-radius:14px;object-fit:cover;background:var(--cream)}
+    .empty{text-align:center;padding:42px 20px;border:1px dashed #cfc8c0;border-radius:20px;color:#777}.modal{position:fixed;inset:0;background:#0007;display:none;align-items:center;justify-content:center;padding:18px;z-index:20}.modal.show{display:flex}.panel{background:#fff;border-radius:24px;padding:24px;width:min(520px,100%);max-height:90vh;overflow:auto}
+    label{display:block;font-size:12px;font-weight:700;margin:14px 0 6px}input,textarea,select{width:100%;border:1px solid #d9d3cd;border-radius:13px;padding:12px;background:#fff}textarea{min-height:88px}.actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+    .auth{min-height:100vh;display:grid;place-items:center;padding:20px;background:linear-gradient(145deg,#fff,var(--cream))}.authbox{width:min(430px,100%);background:#fff;border:1px solid var(--line);border-radius:28px;padding:30px;box-shadow:0 20px 60px #0001}.auth .brand{text-align:center;font-size:40px}.hide{display:none!important}
+    .badge{padding:6px 10px;border-radius:999px;background:var(--cream);font-size:11px}.good{background:var(--ok)}.warning{background:var(--warn)}
+    @media(max-width:760px){header{padding:0 16px}main{padding:18px 14px 105px}.hero{padding:20px;display:block}h1{font-size:30px}.grid{grid-template-columns:1fr}.desktop-only{display:none}nav{grid-template-columns:repeat(7,1fr)}nav button{font-size:9px;padding:9px 1px}.row{align-items:flex-start}.section-title{gap:8px}}
+  </style>
+</head>
+<body>
+<section id="authScreen" class="auth">
+  <div class="authbox">
+    <div class="brand">MERKA</div>
+    <p class="muted" style="text-align:center">Portal de vendedores</p>
+    <div id="authMsg"></div>
+    <label>Correo</label><input id="email" type="email" placeholder="tu@correo.com">
+    <label>Contraseña</label><input id="password" type="password" placeholder="Mínimo 6 caracteres">
+    <div class="actions">
+      <button class="btn" id="loginBtn">Iniciar sesión</button>
+      <button class="btn light" id="registerBtn">Crear cuenta</button>
+    </div>
+  </div>
+</section>
+
+<div id="app" class="shell hide">
+<header>
+  <div class="brand">MERKA</div>
+  <div style="display:flex;gap:10px;align-items:center"><span class="chip" id="storeChip">Sin tienda</span><button class="btn light" id="logoutBtn">Salir</button></div>
+</header>
+<main>
+  <section class="view active" data-view="inicio">
+    <div class="hero"><div><p class="muted">MERKA Vendedor</p><h1>Tu tienda, en un solo lugar.</h1><p>Publica productos y administra tu operación desde una interfaz conectada a Firebase.</p></div><button class="btn" onclick="openProduct()">+ Agregar producto</button></div>
+    <div class="grid"><div class="card"><div class="muted">Productos</div><div class="kpi" id="kpiProducts">0</div></div><div class="card"><div class="muted">Pedidos pendientes</div><div class="kpi" id="kpiOrders">0</div></div><div class="card"><div class="muted">Ventas registradas</div><div class="kpi" id="kpiSales">S/ 0.00</div></div></div>
+    <div class="section-title"><h2>Actividad reciente</h2></div><div class="empty">Tu actividad real aparecerá aquí cuando empieces a vender.</div>
+  </section>
+
+  <section class="view" data-view="productos"><div class="section-title"><div><h2>Productos</h2><div class="muted">Catálogo real de tu tienda</div></div><button class="btn" onclick="openProduct()">+ Agregar</button></div><div id="productList" class="list"></div></section>
+  <section class="view" data-view="live"><div class="section-title"><div><h2>Live</h2><div class="muted">Venta en vivo</div></div></div><div class="empty"><b>Live MERKA</b><br><br>La interfaz está preparada. La transmisión con Agora se conectará en la siguiente etapa.</div></section>
+  <section class="view" data-view="pedidos"><div class="section-title"><div><h2>Pedidos</h2><div class="muted">Solo verás los pedidos correspondientes a tu tienda.</div></div></div><div id="orderList" class="empty">Todavía no tienes pedidos.</div></section>
+  <section class="view" data-view="buzon"><div class="section-title"><div><h2>Buzón</h2><div class="muted">Mensajes de compradores</div></div></div><div class="empty">Todavía no tienes conversaciones.</div></section>
+  <section class="view" data-view="ventas"><div class="section-title"><div><h2>Mis ventas</h2><div class="muted">Historial de ventas de tu tienda</div></div></div><div class="empty">Las ventas completadas aparecerán aquí.</div></section>
+  <section class="view" data-view="tienda"><div class="section-title"><div><h2>Mi tienda</h2><div class="muted">Información pública de tu negocio</div></div><button class="btn" onclick="openStore()">Editar</button></div><div id="storeCard" class="card"></div></section>
+</main>
+<nav>
+<button class="active" data-go="inicio">⌂<br>Inicio</button><button data-go="productos">▦<br>Productos</button><button data-go="live">●<br>Live</button><button data-go="pedidos">□<br>Pedidos</button><button data-go="buzon">✉<br>Buzón</button><button data-go="ventas">$<br>Ventas</button><button data-go="tienda">◇<br>Mi tienda</button>
+</nav>
+</div>
+
+<div id="storeModal" class="modal"><div class="panel"><h2>Mi tienda</h2><label>Nombre</label><input id="storeName"><label>Descripción</label><textarea id="storeDescription"></textarea><label>Zona / ubicación</label><input id="storeLocation" placeholder="Ej. Gamarra, Lima"><label>Dirección de recojo</label><input id="pickupAddress"><label>Tipo de venta</label><select id="sellerType"><option>Minorista</option><option>Mayorista</option><option>Ambos</option></select><div class="actions"><button class="btn" id="saveStore">Guardar tienda</button><button class="btn light" onclick="closeModal('storeModal')">Cancelar</button></div></div></div>
+
+<div id="productModal" class="modal"><div class="panel"><h2>Nuevo producto</h2><label>Nombre</label><input id="productName"><label>Descripción</label><textarea id="productDescription"></textarea><label>Precio minorista (S/)</label><input id="retailPrice" type="number" min="0" step=".01"><label>Precio mayorista (S/)</label><input id="wholesalePrice" type="number" min="0" step=".01"><label>Mínimo mayorista</label><input id="wholesaleMin" type="number" min="1"><label>Stock</label><input id="stock" type="number" min="0"><label>URL de imagen (opcional por ahora)</label><input id="imageUrl" type="url"><div class="actions"><button class="btn" id="saveProduct">Publicar producto</button><button class="btn light" onclick="closeModal('productModal')">Cancelar</button></div></div></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, addDoc, collection, query, where, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+
+const firebaseConfig={apiKey:"AIzaSyCfsw2KkgWFGxBRCvnP1cZXCMAfR5BUA34",authDomain:"merka-8a703.firebaseapp.com",projectId:"merka-8a703",storageBucket:"merka-8a703.firebasestorage.app",messagingSenderId:"540198621144",appId:"1:540198621144:web:754ff3b2fe81cbc3372cad"};
+const fb=initializeApp(firebaseConfig), auth=getAuth(fb), db=getFirestore(fb);
+let user=null, store=null, unsubProducts=null;
+
+const $=id=>document.getElementById(id);
+const money=n=>"S/ "+Number(n||0).toFixed(2);
+function msg(t,ok=false){$("authMsg").innerHTML=`<p class="${ok?'good':'warning'}" style="padding:10px;border-radius:12px">${t}</p>`}
+window.closeModal=id=>$(id).classList.remove("show");
+window.openStore=()=>$("storeModal").classList.add("show");
+window.openProduct=()=>{if(!store){alert("Primero crea tu tienda.");openStore();return}$("productModal").classList.add("show")}
+
+$("registerBtn").onclick=async()=>{try{const c=await createUserWithEmailAndPassword(auth,$("email").value.trim(),$("password").value);await setDoc(doc(db,"users",c.user.uid),{email:c.user.email,role:"seller",createdAt:serverTimestamp()},{merge:true});msg("Cuenta creada.",true)}catch(e){msg(e.message)}};
+$("loginBtn").onclick=async()=>{try{await signInWithEmailAndPassword(auth,$("email").value.trim(),$("password").value)}catch(e){msg(e.message)}};
+$("logoutBtn").onclick=()=>signOut(auth);
+
+onAuthStateChanged(auth,async u=>{
+ user=u;
+ if(!u){$("authScreen").classList.remove("hide");$("app").classList.add("hide");return}
+ $("authScreen").classList.add("hide");$("app").classList.remove("hide");
+ await setDoc(doc(db,"users",u.uid),{email:u.email,role:"seller",lastLoginAt:serverTimestamp()},{merge:true});
+ await loadStore(); watchProducts();
+});
+
+async function loadStore(){
+ const ref=doc(db,"stores",user.uid), snap=await getDoc(ref);
+ store=snap.exists()?{id:snap.id,...snap.data()}:null;
+ renderStore();
+}
+function renderStore(){
+ $("storeChip").textContent=store?.name||"Sin tienda";
+ $("storeCard").innerHTML=store?`<h3>${esc(store.name)}</h3><p>${esc(store.description||"Sin descripción")}</p><p><b>Ubicación:</b> ${esc(store.location||"—")}</p><p><b>Recojo:</b> ${esc(store.pickupAddress||"—")}</p><span class="badge">${esc(store.sellerType||"—")}</span>`:`<div class="empty">Aún no has creado tu tienda.<br><br><button class="btn" onclick="openStore()">Crear mi tienda</button></div>`;
+ if(store){$("storeName").value=store.name||"";$("storeDescription").value=store.description||"";$("storeLocation").value=store.location||"";$("pickupAddress").value=store.pickupAddress||"";$("sellerType").value=store.sellerType||"Minorista"}
+}
+$("saveStore").onclick=async()=>{
+ const data={sellerId:user.uid,name:$("storeName").value.trim(),description:$("storeDescription").value.trim(),location:$("storeLocation").value.trim(),pickupAddress:$("pickupAddress").value.trim(),sellerType:$("sellerType").value,status:"active",verificationStatus:"pending",updatedAt:serverTimestamp()};
+ if(!data.name)return alert("Escribe el nombre de tu tienda.");
+ await setDoc(doc(db,"stores",user.uid),data,{merge:true});closeModal("storeModal");await loadStore();
+};
+
+$("saveProduct").onclick=async()=>{
+ if(!store)return;
+ const data={sellerId:user.uid,storeId:store.id,storeName:store.name,name:$("productName").value.trim(),description:$("productDescription").value.trim(),retailPrice:Number($("retailPrice").value||0),wholesalePrice:Number($("wholesalePrice").value||0),wholesaleMin:Number($("wholesaleMin").value||1),stock:Number($("stock").value||0),imageUrl:$("imageUrl").value.trim(),status:"active",createdAt:serverTimestamp()};
+ if(!data.name)return alert("Escribe el nombre del producto.");
+ await addDoc(collection(db,"products"),data);closeModal("productModal");["productName","productDescription","retailPrice","wholesalePrice","wholesaleMin","stock","imageUrl"].forEach(x=>$(x).value="");
+};
+
+function watchProducts(){
+ if(unsubProducts)unsubProducts();
+ const q=query(collection(db,"products"),where("sellerId","==",user.uid));
+ unsubProducts=onSnapshot(q,s=>{
+   const items=s.docs.map(d=>({id:d.id,...d.data()}));$("kpiProducts").textContent=items.length;
+   $("productList").innerHTML=items.length?items.map(p=>`<div class="row"><div style="display:flex;gap:12px;align-items:center">${p.imageUrl?`<img class="thumb" src="${esc(p.imageUrl)}">`:`<div class="thumb"></div>`}<div><b>${esc(p.name)}</b><div class="muted">${money(p.retailPrice)} · Stock ${p.stock}</div></div></div><span class="badge ${p.stock>0?'good':'warning'}">${p.stock>0?'Publicado':'Agotado'}</span></div>`).join(""):`<div class="empty">Aún no tienes productos.<br><br><button class="btn" onclick="openProduct()">Publicar mi primer producto</button></div>`;
+ });
+}
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-go]").forEach(x=>x.classList.toggle("active",x===b));document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.dataset.view===b.dataset.go))});
+</script>
+</body></html>

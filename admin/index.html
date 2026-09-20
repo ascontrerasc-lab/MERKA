@@ -1,0 +1,55 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MERKA Admin</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"><style>
+:root{--ink:#2B2B2B;--black:#111;--paper:#fff;--cream:#EDE8E1;--sand:#C9BDAF;--gray:#A7A7A7;--line:#e8e3dd;--ok:#dfeee5;--warn:#f5e6d3}
+*{box-sizing:border-box}body{margin:0;font-family:Montserrat,Arial,sans-serif;background:#f8f6f3;color:var(--ink)}
+button,input,textarea,select{font:inherit}button{cursor:pointer}.hide{display:none!important}
+.shell{max-width:1180px;margin:auto;min-height:100vh;background:#fff;box-shadow:0 0 45px #0000000d}
+header{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fffc;backdrop-filter:blur(14px);z-index:5}
+.brand{font-family:"Playfair Display",serif;font-size:28px;letter-spacing:2px;color:#111}.chip,.badge{background:var(--cream);border:0;border-radius:999px;padding:8px 12px;font-size:12px}
+main{padding:28px 28px 100px}.hero{background:linear-gradient(135deg,var(--cream),#fff);border:1px solid var(--line);border-radius:26px;padding:28px}
+h1{font-family:"Playfair Display",serif;font-size:38px;margin:0 0 8px}h2,h3{margin-top:0}.muted{color:#777}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:22px 0}.card{border:1px solid var(--line);border-radius:20px;padding:20px;background:#fff}.kpi{font-size:28px;font-weight:700}
+.btn{border:0;border-radius:999px;padding:12px 18px;background:#111;color:#fff;font-weight:600}.btn.light{background:var(--cream);color:#111}.btn.outline{background:#fff;color:#111;border:1px solid #111}
+nav{position:fixed;left:50%;transform:translateX(-50%);bottom:14px;width:min(760px,calc(100% - 24px));background:#111;color:#fff;border-radius:22px;padding:8px;display:flex;justify-content:space-around;z-index:8;box-shadow:0 12px 35px #0003}
+nav button{flex:1;background:transparent;color:#ddd;border:0;padding:10px 4px;border-radius:15px;font-size:11px}nav button.active{background:#fff;color:#111}.view{display:none}.view.active{display:block}
+.section-title{display:flex;align-items:center;justify-content:space-between;margin:26px 0 14px}.list{display:grid;gap:12px}.row{display:flex;align-items:center;justify-content:space-between;gap:14px;border:1px solid var(--line);border-radius:17px;padding:14px}.empty{text-align:center;padding:42px 20px;border:1px dashed #cfc8c0;border-radius:20px;color:#777}
+.auth{min-height:100vh;display:grid;place-items:center;padding:20px;background:linear-gradient(145deg,#fff,var(--cream))}.authbox{width:min(430px,100%);background:#fff;border:1px solid var(--line);border-radius:28px;padding:30px;box-shadow:0 20px 60px #0001}.auth .brand{text-align:center;font-size:40px}
+label{display:block;font-size:12px;font-weight:700;margin:14px 0 6px}input,textarea,select{width:100%;border:1px solid #d9d3cd;border-radius:13px;padding:12px;background:#fff}.actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.modal{position:fixed;inset:0;background:#0007;display:none;align-items:center;justify-content:center;padding:18px;z-index:20}.modal.show{display:flex}.panel{background:#fff;border-radius:24px;padding:24px;width:min(520px,100%);max-height:90vh;overflow:auto}
+.product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.product{border:1px solid var(--line);border-radius:18px;overflow:hidden}.product img,.ph{width:100%;aspect-ratio:1/1;object-fit:cover;background:var(--cream)}.product .body{padding:14px}.good{background:var(--ok)}.warning{background:var(--warn)}
+@media(max-width:760px){header{padding:0 16px}main{padding:18px 14px 105px}.grid,.product-grid{grid-template-columns:1fr 1fr}.hero{padding:20px}h1{font-size:30px}nav button{font-size:9px}.row{align-items:flex-start}}@media(max-width:460px){.product-grid{grid-template-columns:1fr}}
+</style></head><body><section id="authScreen" class="auth"><div class="authbox"><div class="brand">MERKA</div><p class="muted" style="text-align:center">Administración interna</p><div id="authMsg"></div><label>Correo</label><input id="email" type="email"><label>Contraseña</label><input id="password" type="password"><div class="actions"><button class="btn" id="loginBtn">Entrar</button></div></div></section>
+<div id="app" class="shell hide"><header><div class="brand">MERKA</div><button class="btn light" id="logoutBtn">Salir</button></header><main>
+<section class="view active" data-view="inicio"><div class="hero"><p class="muted">Centro operativo</p><h1>MERKA Admin</h1><p>Pedidos, vendedores, usuarios, delivery y soporte desde una sola operación.</p></div><div class="grid"><div class="card"><span class="muted">Pedidos por revisar</span><div id="kOrders" class="kpi">0</div></div><div class="card"><span class="muted">Vendedores</span><div id="kStores" class="kpi">0</div></div><div class="card"><span class="muted">Usuarios</span><div id="kUsers" class="kpi">0</div></div></div></section>
+<section class="view" data-view="pedidos"><div class="section-title"><h2>Pedidos</h2></div><div id="orders" class="list"></div></section>
+<section class="view" data-view="transferencias"><div class="section-title"><h2>Transferencias</h2></div><div class="empty">El seguimiento de pagos a vendedores aparecerá aquí.</div></section>
+<section class="view" data-view="vendedores"><div class="section-title"><h2>Vendedores</h2></div><div id="stores" class="list"></div></section>
+<section class="view" data-view="usuarios"><div class="section-title"><h2>Usuarios</h2></div><div id="users" class="list"></div></section>
+<section class="view" data-view="delivery"><div class="section-title"><h2>Delivery</h2></div><div class="empty">Las rutas y repartidores asignados aparecerán aquí.</div></section>
+<section class="view" data-view="soporte"><div class="section-title"><h2>Soporte</h2></div><div class="empty">Los casos de soporte aparecerán aquí.</div></section>
+</main><nav><button class="active" data-go="inicio">⌂<br>Inicio</button><button data-go="pedidos">□<br>Pedidos</button><button data-go="transferencias">$<br>Transfer.</button><button data-go="vendedores">◇<br>Tiendas</button><button data-go="usuarios">♙<br>Usuarios</button><button data-go="delivery">→<br>Delivery</button><button data-go="soporte">!<br>Soporte</button></nav></div>
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+import {getAuth,signInWithEmailAndPassword,signOut,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+import {getFirestore,doc,getDoc,collection,onSnapshot,updateDoc,serverTimestamp} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+const firebaseConfig = {
+  apiKey: "AIzaSyCfsw2KkgWFGxBRCvnP1cZXCMAfR5BUA34",
+  authDomain: "merka-8a703.firebaseapp.com",
+  projectId: "merka-8a703",
+  storageBucket: "merka-8a703.firebasestorage.app",
+  messagingSenderId: "540198621144",
+  appId: "1:540198621144:web:754ff3b2fe81cbc3372cad"
+};
+const $=id=>document.getElementById(id);
+const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+const money=n=>"S/ "+Number(n||0).toFixed(2);
+function msg(t,ok=false){$("authMsg").innerHTML=`<p class="${ok?'good':'warning'}" style="padding:10px;border-radius:12px">${t}</p>`}
+document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-go]").forEach(x=>x.classList.toggle("active",x===b));document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.dataset.view===b.dataset.go))});
+
+const fb=initializeApp(firebaseConfig),auth=getAuth(fb),db=getFirestore(fb);
+$("loginBtn").onclick=async()=>{try{await signInWithEmailAndPassword(auth,$("email").value.trim(),$("password").value)}catch(e){msg(e.message)}};$("logoutBtn").onclick=()=>signOut(auth);
+onAuthStateChanged(auth,async u=>{if(!u){$("authScreen").classList.remove("hide");$("app").classList.add("hide");return}let s=await getDoc(doc(db,"users",u.uid));if(!s.exists()||s.data().role!=="admin"){msg("Esta cuenta no tiene rol de administrador.");await signOut(auth);return}$("authScreen").classList.add("hide");$("app").classList.remove("hide");watch()});
+function watch(){
+ onSnapshot(collection(db,"orders"),s=>{let a=s.docs.map(d=>({id:d.id,...d.data()}));$("kOrders").textContent=a.filter(x=>x.status==="pending_admin_confirmation").length;$("orders").innerHTML=a.length?a.map(o=>`<div class="row"><div><b>#${o.id.slice(0,8)}</b><div class="muted">${money(o.total)} · ${esc(o.status)}</div></div>${o.status==="pending_admin_confirmation"?`<button class="btn" data-ok="${o.id}">✓ OK — CONFIRMAR</button>`:`<span class="badge good">${esc(o.status)}</span>`}</div>`).join(""):'<div class="empty">No hay pedidos.</div>';document.querySelectorAll("[data-ok]").forEach(b=>b.onclick=async()=>{await updateDoc(doc(db,"orders",b.dataset.ok),{status:"confirmed",adminConfirmedAt:serverTimestamp(),deliveryStatus:"searching_driver",sellerPayoutStatus:"pending"})})});
+ onSnapshot(collection(db,"stores"),s=>{$("kStores").textContent=s.size;$("stores").innerHTML=s.docs.map(d=>`<div class="row"><div><b>${esc(d.data().name)}</b><div class="muted">${esc(d.data().location||"")}</div></div><span class="badge">${esc(d.data().verificationStatus||"pending")}</span></div>`).join("")||'<div class="empty">Sin tiendas.</div>'});
+ onSnapshot(collection(db,"users"),s=>{$("kUsers").textContent=s.size;$("users").innerHTML=s.docs.map(d=>`<div class="row"><b>${esc(d.data().email||d.id)}</b><span class="badge">${esc(d.data().role||"—")}</span></div>`).join("")||'<div class="empty">Sin usuarios.</div>'});
+}
+</script></body></html>

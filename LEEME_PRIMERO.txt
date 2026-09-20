@@ -1,0 +1,24 @@
+MERKA MVP — 4 interfaces conectadas al mismo Firebase
+======================================================
+Carpetas:
+- comprador/index.html
+- vendedor/index.html
+- admin/index.html
+- delivery/index.html
+
+GitHub:
+Puedes subir la carpeta completa a UN SOLO repositorio.
+Con GitHub Pages, las rutas serán /comprador/, /vendedor/, /admin/ y /delivery/.
+
+Conexión inicial:
+- Comprador: Auth + users + lectura products + creación orders.
+- Vendedor: Auth + users + stores + products.
+- Admin: login de cuenta con role=admin + lectura de orders/stores/users + confirmación.
+- Delivery: Auth + users(role=delivery) + solicitudes de orders confirmados + asignación/estados.
+
+IMPORTANTE:
+1. Admin NO tiene registro público por seguridad. Para probarlo habrá que crear/asignar una cuenta admin de forma controlada.
+2. Las reglas Firestore abiertas son SOLO para desarrollo.
+3. La aceptación de delivery en esta V1 aún no usa transacción atómica; antes de una prueba pública hay que endurecerla para evitar doble asignación.
+4. Live/Agora, pagos Mercado Pago, direcciones completas, subórdenes multipunto, chat, notificaciones y reglas seguras se conectan en iteraciones posteriores.
+5. No uses esta V1 como producción pública todavía.
