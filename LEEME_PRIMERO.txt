@@ -1,14 +1,12 @@
-MERKA UNIFICADO V7 — correcciones
+MERKA UNIFICADO V9
 
 Cambios principales:
-- Login: no entra automáticamente al abrir; requiere pulsar Iniciar sesión.
-- Mensajes de acceso más claros para campos vacíos, credenciales incorrectas y otros errores.
-- Live comprador: suscripción reforzada a video/audio de Agora, incluyendo transmisiones iniciadas antes de que el comprador entre.
-- Admin: nueva sección Lives con botón Finalizar Live.
-- Admin: reconoce role=admin, isAdmin=true o roles que contenga admin.
-- Delivery: una cuenta admin también puede entrar para supervisar/probar el módulo.
-- Comprador/Vendedor siguen unificados en la app principal.
+- Login manual en MERKA.
+- Admin ya no tiene login independiente: se abre desde Mi cuenta > Panel de Administración.
+- El acceso directo /admin/ redirige a MERKA si no fue abierto desde una sesión admin válida.
+- Delivery: Pedido recogido > En tránsito > Llegué al destino > código de 4 dígitos > Entregado.
+- El comprador ve su código en Mis pedidos cuando el delivery ya está asignado/en ruta.
+- Logo de tienda por URL o archivo PNG/JPG/WEBP, con vista previa.
+- Mantiene dashboard Admin, Live, chat, comentarios, productos, canasta y pedidos.
 
-IMPORTANTE:
-- El token de Agora incluido sigue siendo TEMPORAL. Cuando expire, el Live necesitará un token nuevo o, como solución definitiva, un servidor de tokens.
-- Las reglas abiertas de Firestore son solo para desarrollo. Deben asegurarse antes de uso público.
+NOTA MVP: imágenes de archivo se comprimen y guardan como data URL en Firestore. Para producción conviene Firebase Storage. Las reglas actuales de Firestore deben endurecerse antes de publicar comercialmente.
