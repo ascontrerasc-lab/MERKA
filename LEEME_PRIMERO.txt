@@ -1,13 +1,14 @@
-MERKA UNIFICADO V6
+MERKA UNIFICADO V7 — correcciones
 
 Cambios principales:
-- Login como pantalla inicial y registro en pantalla separada.
-- Onboarding nuevo: comenzar comprando o vendiendo.
-- Una sola cuenta MERKA puede comprar y vender.
-- Modo Comprar/Vender con selector minimalista.
-- Interfaz vendedor más limpia y estética.
-- Secuencia vendedor: tienda > productos > mensajes/pedidos > Live.
-- Live: preview local antes de publicar, diagnóstico, micrófono/cámara y cambio de cámara.
-- Admin y Delivery siguen separados y conectados al mismo Firebase.
+- Login: no entra automáticamente al abrir; requiere pulsar Iniciar sesión.
+- Mensajes de acceso más claros para campos vacíos, credenciales incorrectas y otros errores.
+- Live comprador: suscripción reforzada a video/audio de Agora, incluyendo transmisiones iniciadas antes de que el comprador entre.
+- Admin: nueva sección Lives con botón Finalizar Live.
+- Admin: reconoce role=admin, isAdmin=true o roles que contenga admin.
+- Delivery: una cuenta admin también puede entrar para supervisar/probar el módulo.
+- Comprador/Vendedor siguen unificados en la app principal.
 
-IMPORTANTE: el token de Agora incluido es temporal y expira. Firestore sigue con reglas de desarrollo y debe asegurarse antes de producción.
+IMPORTANTE:
+- El token de Agora incluido sigue siendo TEMPORAL. Cuando expire, el Live necesitará un token nuevo o, como solución definitiva, un servidor de tokens.
+- Las reglas abiertas de Firestore son solo para desarrollo. Deben asegurarse antes de uso público.
