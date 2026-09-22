@@ -1,24 +1,26 @@
-MERKA MVP — 4 interfaces conectadas al mismo Firebase
-======================================================
-Carpetas:
-- comprador/index.html
-- vendedor/index.html
-- admin/index.html
-- delivery/index.html
+MERKA UNIFICADO V5 — MVP DE PRUEBA
 
-GitHub:
-Puedes subir la carpeta completa a UN SOLO repositorio.
-Con GitHub Pages, las rutas serán /comprador/, /vendedor/, /admin/ y /delivery/.
+ESTRUCTURA
+- /index.html = MERKA principal: una cuenta, Modo Comprar + Modo Vender.
+- /admin = panel Admin separado.
+- /delivery = panel Delivery separado.
+- /comprador y /vendedor redirigen a la app principal para conservar enlaces antiguos.
 
-Conexión inicial:
-- Comprador: Auth + users + lectura products + creación orders.
-- Vendedor: Auth + users + stores + products.
-- Admin: login de cuenta con role=admin + lectura de orders/stores/users + confirmación.
-- Delivery: Auth + users(role=delivery) + solicitudes de orders confirmados + asignación/estados.
+INCLUYE
+- Registro/login único Firebase.
+- Activar tienda con la misma cuenta y cambiar Comprar ↔ Vender sin cerrar sesión.
+- Crear, activar/desactivar y eliminar productos.
+- Eliminar tienda conservando la cuenta de comprador.
+- Imagen por URL o cámara/archivo (comprimida para el MVP).
+- Perfil de tienda + sus productos.
+- Chat comprador-vendedor en Firestore.
+- Comentarios de productos + respuesta del vendedor.
+- Carrito y creación de pedidos.
+- Pedidos comprador/vendedor.
+- Live Agora host/audience + comentarios Firebase + producto destacado.
 
-IMPORTANTE:
-1. Admin NO tiene registro público por seguridad. Para probarlo habrá que crear/asignar una cuenta admin de forma controlada.
-2. Las reglas Firestore abiertas son SOLO para desarrollo.
-3. La aceptación de delivery en esta V1 aún no usa transacción atómica; antes de una prueba pública hay que endurecerla para evitar doble asignación.
-4. Live/Agora, pagos Mercado Pago, direcciones completas, subórdenes multipunto, chat, notificaciones y reglas seguras se conectan en iteraciones posteriores.
-5. No uses esta V1 como producción pública todavía.
+IMPORTANTE
+1. El token Agora incluido es TEMPORAL y expirará. Si expira, solo el Live fallará.
+2. Las reglas Firestore abiertas son solo para desarrollo. Antes de publicar MERKA hay que asegurar Auth/Rules.
+3. Las fotos cámara/archivo se guardan como data URL comprimida en Firestore SOLO para prototipo. Para producción debe usarse Firebase Storage/Cloud Storage.
+4. Pago sigue siendo simulado; Mercado Pago no está integrado.
