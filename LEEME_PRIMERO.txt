@@ -1,26 +1,13 @@
-MERKA UNIFICADO V5 — MVP DE PRUEBA
+MERKA UNIFICADO V6
 
-ESTRUCTURA
-- /index.html = MERKA principal: una cuenta, Modo Comprar + Modo Vender.
-- /admin = panel Admin separado.
-- /delivery = panel Delivery separado.
-- /comprador y /vendedor redirigen a la app principal para conservar enlaces antiguos.
+Cambios principales:
+- Login como pantalla inicial y registro en pantalla separada.
+- Onboarding nuevo: comenzar comprando o vendiendo.
+- Una sola cuenta MERKA puede comprar y vender.
+- Modo Comprar/Vender con selector minimalista.
+- Interfaz vendedor más limpia y estética.
+- Secuencia vendedor: tienda > productos > mensajes/pedidos > Live.
+- Live: preview local antes de publicar, diagnóstico, micrófono/cámara y cambio de cámara.
+- Admin y Delivery siguen separados y conectados al mismo Firebase.
 
-INCLUYE
-- Registro/login único Firebase.
-- Activar tienda con la misma cuenta y cambiar Comprar ↔ Vender sin cerrar sesión.
-- Crear, activar/desactivar y eliminar productos.
-- Eliminar tienda conservando la cuenta de comprador.
-- Imagen por URL o cámara/archivo (comprimida para el MVP).
-- Perfil de tienda + sus productos.
-- Chat comprador-vendedor en Firestore.
-- Comentarios de productos + respuesta del vendedor.
-- Carrito y creación de pedidos.
-- Pedidos comprador/vendedor.
-- Live Agora host/audience + comentarios Firebase + producto destacado.
-
-IMPORTANTE
-1. El token Agora incluido es TEMPORAL y expirará. Si expira, solo el Live fallará.
-2. Las reglas Firestore abiertas son solo para desarrollo. Antes de publicar MERKA hay que asegurar Auth/Rules.
-3. Las fotos cámara/archivo se guardan como data URL comprimida en Firestore SOLO para prototipo. Para producción debe usarse Firebase Storage/Cloud Storage.
-4. Pago sigue siendo simulado; Mercado Pago no está integrado.
+IMPORTANTE: el token de Agora incluido es temporal y expira. Firestore sigue con reglas de desarrollo y debe asegurarse antes de producción.
