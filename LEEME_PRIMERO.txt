@@ -1,12 +1,12 @@
-MERKA UNIFICADO V9
+MERKA UNIFICADO V10
 
 Cambios principales:
-- Login manual en MERKA.
-- Admin ya no tiene login independiente: se abre desde Mi cuenta > Panel de Administración.
-- El acceso directo /admin/ redirige a MERKA si no fue abierto desde una sesión admin válida.
-- Delivery: Pedido recogido > En tránsito > Llegué al destino > código de 4 dígitos > Entregado.
-- El comprador ve su código en Mis pedidos cuando el delivery ya está asignado/en ruta.
-- Logo de tienda por URL o archivo PNG/JPG/WEBP, con vista previa.
-- Mantiene dashboard Admin, Live, chat, comentarios, productos, canasta y pedidos.
+- Admin vuelve a tener inicio de sesión directo desde /admin/.
+- El acceso Admin valida Firebase Authentication y el permiso admin del documento users/{uid}.
+- Delivery tiene una pantalla de ingreso/registro visualmente alineada con MERKA principal.
+- Delivery conserva el flujo de código de entrega de 4 dígitos.
+- Se mantienen los cambios V9: logo de tienda por archivo/URL, flujo de pedido y paneles.
 
-NOTA MVP: imágenes de archivo se comprimen y guardan como data URL en Firestore. Para producción conviene Firebase Storage. Las reglas actuales de Firestore deben endurecerse antes de publicar comercialmente.
+IMPORTANTE:
+- No existe registro público de administradores. Para una cuenta maestra, crea el usuario en Firebase Authentication y su documento users/{uid} debe tener isAdmin:true y roles:["admin"].
+- Antes de producción, cerrar las reglas abiertas de Firestore.
