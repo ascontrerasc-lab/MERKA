@@ -1,12 +1,14 @@
-MERKA UNIFICADO V10
+MERKA UNIFICADO V13
 
-Cambios principales:
-- Admin vuelve a tener inicio de sesión directo desde /admin/.
-- El acceso Admin valida Firebase Authentication y el permiso admin del documento users/{uid}.
-- Delivery tiene una pantalla de ingreso/registro visualmente alineada con MERKA principal.
-- Delivery conserva el flujo de código de entrega de 4 dígitos.
-- Se mantienen los cambios V9: logo de tienda por archivo/URL, flujo de pedido y paneles.
+Incluye:
+- Inicio social tipo feed con productos, anuncios, promociones e imágenes/videos.
+- Reacciones con emojis y comentarios conectados a Firestore.
+- Buscador de tienda o producto y directorio de tiendas inscritas.
+- Perfil de tienda con productos y acceso al Live activo.
+- Live vertical responsive, controles de cámara/micrófono de un toque y comentarios laterales.
+- Admin: eliminar/ocultar/mostrar comentarios y finalizar Lives. El cierre desde Admin también detiene la sesión del vendedor/comprador.
+- Delivery mantiene código de entrega de 4 dígitos.
+- Crear cuenta Admin Maestro se mantiene.
 
-IMPORTANTE:
-- No existe registro público de administradores. Para una cuenta maestra, crea el usuario en Firebase Authentication y su documento users/{uid} debe tener isAdmin:true y roles:["admin"].
-- Antes de producción, cerrar las reglas abiertas de Firestore.
+IMPORTANTE: para subir archivos de video/imagen en Publicaciones, Firebase Storage debe estar habilitado y permitir escritura a usuarios autenticados. Si no, usa una URL de imagen/video.
+El token de Agora es temporal y expirará; cuando eso ocurra hay que generar otro para el canal merka-live-001.
