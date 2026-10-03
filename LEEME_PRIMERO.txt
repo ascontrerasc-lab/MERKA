@@ -1,14 +1,30 @@
-MERKA UNIFICADO V13
+MERKA UNIFICADO V15 — versión reparada
 
-Incluye:
-- Inicio social tipo feed con productos, anuncios, promociones e imágenes/videos.
-- Reacciones con emojis y comentarios conectados a Firestore.
-- Buscador de tienda o producto y directorio de tiendas inscritas.
-- Perfil de tienda con productos y acceso al Live activo.
-- Live vertical responsive, controles de cámara/micrófono de un toque y comentarios laterales.
-- Admin: eliminar/ocultar/mostrar comentarios y finalizar Lives. El cierre desde Admin también detiene la sesión del vendedor/comprador.
-- Delivery mantiene código de entrega de 4 dígitos.
-- Crear cuenta Admin Maestro se mantiene.
+CAMBIOS PRINCIPALES
+- Flujo de pedidos corregido: Admin confirma -> vendedores preparan -> todos los vendedores marcan Listo -> recién aparece en Delivery.
+- Pedidos de múltiples vendedores: readySellerIds controla cada tienda por separado.
+- Delivery usa sellerIds/storeIds de forma compatible y muestra número correcto de puntos de recojo.
+- Checkout ampliado: nombre, teléfono, distrito, dirección y referencia.
+- Cada item del pedido guarda storeLocation para facilitar el recojo.
+- Se conserva deliveryCode de 4 dígitos y el repartidor no lo ve antes de ingresarlo.
+- Comprador y vendedor siguen unificados bajo una sola cuenta/modo.
 
-IMPORTANTE: para subir archivos de video/imagen en Publicaciones, Firebase Storage debe estar habilitado y permitir escritura a usuarios autenticados. Si no, usa una URL de imagen/video.
-El token de Agora es temporal y expirará; cuando eso ocurra hay que generar otro para el canal merka-live-001.
+IMPORTANTE SOBRE MERKA LIVE
+La V15 conserva el canal Agora merka-live-001 porque el token temporal incluido está ligado a la configuración actual. Para soportar múltiples Lives simultáneos de forma segura se necesita generación dinámica de tokens desde backend/Cloud Functions; cambiar solo el nombre del canal rompería el Live con un token de canal fijo.
+
+IMPORTANTE SOBRE FIREBASE
+Este ZIP contiene el frontend, pero las reglas desplegadas de Firestore/Storage viven en Firebase y deben revisarse antes de producción. No se han modificado automáticamente desde este paquete.
+
+ESTADO
+Pensado para validación/MVP. Antes de producción: mover tokens de Agora al backend, revisar Firestore/Storage Rules, validar pagos reales y añadir trazabilidad de cada punto de recojo si se requiere logística avanzada.
+
+ACTUALIZACIÓN V15.1
+- Token temporal de Agora renovado y variable unificada como AGORA_TEMP_TOKEN.
+- Canal actual: merka-live-001.
+- Flujo de pedidos visible: Pago por confirmar → Preparando en tiendas → Buscando repartidor → Repartidor asignado → En camino → Entregado.
+- Pedidos multitienda esperan a que todos los vendedores marquen su parte como lista.
+- Comprador ve progreso y código de entrega solo cuando corresponde.
+- Admin y Delivery muestran estados legibles en español.
+
+IMPORTANTE SOBRE AGORA
+El token actual sigue siendo temporal. Cuando expire se debe reemplazar AGORA_TEMP_TOKEN por un token nuevo generado para el canal merka-live-001. Para múltiples Lives simultáneos se requiere generación dinámica de token/canal desde backend o Cloud Functions.
