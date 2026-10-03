@@ -28,3 +28,14 @@ ACTUALIZACIÓN V15.2
 
 IMPORTANTE SOBRE AGORA
 El token actual sigue siendo temporal. Cuando expire se debe reemplazar AGORA_TEMP_TOKEN por un token nuevo generado para el canal merka-live-001. Para múltiples Lives simultáneos se requiere generación dinámica de token/canal desde backend o Cloud Functions.
+
+
+=== MERKA V15.3 - CUENTAS + STOCK ===
+- Una cuenta Admin también puede usar Comprar y Vender con el mismo usuario.
+- El acceso Administración aparece para cuentas con rol admin.
+- Delivery queda separado: solo cuentas con rol delivery pueden ingresar al módulo Delivery.
+- Eliminar una tienda ya no elimina accidentalmente el permiso Admin.
+- Al publicar un producto aparece confirmación visual.
+- Cada producto del vendedor tiene control de unidades: - / stock / +.
+- El stock se actualiza en Firestore mediante transacción y nunca baja de cero.
+- Se mantiene el token temporal de Agora entregado para esta versión.
