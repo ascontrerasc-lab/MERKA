@@ -18,7 +18,7 @@ Este ZIP contiene el frontend, pero las reglas desplegadas de Firestore/Storage 
 ESTADO
 Pensado para validación/MVP. Antes de producción: mover tokens de Agora al backend, revisar Firestore/Storage Rules, validar pagos reales y añadir trazabilidad de cada punto de recojo si se requiere logística avanzada.
 
-ACTUALIZACIÓN V15.1
+ACTUALIZACIÓN V15.2
 - Token temporal de Agora renovado y variable unificada como AGORA_TEMP_TOKEN.
 - Canal actual: merka-live-001.
 - Flujo de pedidos visible: Pago por confirmar → Preparando en tiendas → Buscando repartidor → Repartidor asignado → En camino → Entregado.
