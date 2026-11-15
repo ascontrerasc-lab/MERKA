@@ -1,0 +1,26 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function authed() { return request.auth != null; }
+    function me() { return request.auth.uid; }
+    function verifiedSeller(userId) { return firestore.get(/databases/(default)/documents/users/$(userId)).data.sellerStatus == 'approved'; }
+    function imageValid() { return request.resource.size < 6 * 1024 * 1024 && request.resource.contentType.matches('image/(jpeg|png|webp)'); }
+    function mediaValid() { return request.resource.size < 50 * 1024 * 1024 && (request.resource.contentType.matches('image/(jpeg|png|webp)') || request.resource.contentType.matches('video/(mp4|webm)')); }
+    match /catalog/{userId}/{file} {
+      allow read: if true;
+      allow create: if authed() && me() == userId && verifiedSeller(userId) && imageValid();
+      allow update, delete: if false;
+    }
+    match /posts/{userId}/{file} {
+      allow read: if true;
+      allow create: if authed() && me() == userId && verifiedSeller(userId) && mediaValid();
+      allow update, delete: if false;
+    }
+    match /payment-proofs/{userId}/{orderId}/{file} {
+      allow read: if authed() && (me() == userId || request.auth.token.admin == true);
+      allow create: if authed() && me() == userId && imageValid();
+      allow update, delete: if false;
+    }
+    match /{allPaths=**} { allow read, write: if false; }
+  }
+}

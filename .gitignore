@@ -1,0 +1,28 @@
+# Dependencias y temporales
+node_modules/
+**/node_modules/
+.firebase/
+.firebase/**
+*.log
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
+
+# Credenciales y secretos: NUNCA subir a GitHub
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*.pfx
+*.key
+serviceAccountKey.json
+**/serviceAccountKey.json
+*service-account*.json
+**/firebase-adminsdk-*.json
+operator.json
+credentials.json
+
+# Archivos de configuración de edición local si se usan
+.firebaserc.local

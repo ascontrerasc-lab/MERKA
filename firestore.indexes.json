@@ -1,0 +1,4 @@
+{"indexes":[
+  {"collectionGroup":"products","queryScope":"COLLECTION","fields":[{"fieldPath":"active","order":"ASCENDING"},{"fieldPath":"createdAt","order":"DESCENDING"}]},
+  {"collectionGroup":"posts","queryScope":"COLLECTION","fields":[{"fieldPath":"active","order":"ASCENDING"},{"fieldPath":"createdAt","order":"DESCENDING"}]}
+],"fieldOverrides":[]}

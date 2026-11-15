@@ -1,0 +1,53 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function me() { return request.auth.uid; }
+    function admin() { return signedIn() && request.auth.token.admin == true; }
+    // All writes to commercial/role-sensitive documents run through vetted Cloud Functions.
+    match /users/{userId} {
+      allow get: if signedIn() && (me() == userId || admin());
+      allow list: if admin();
+      allow write: if false;
+    }
+    match /stores/{storeId} {
+      allow get, list: if resource.data.status == 'approved' && resource.data.active == true
+        || (signedIn() && (resource.data.sellerId == me() || admin()));
+      allow write: if false;
+    }
+    match /products/{productId} {
+      allow get, list: if resource.data.active == true
+        || (signedIn() && (resource.data.sellerId == me() || admin()));
+      allow write: if false;
+    }
+    match /wholesaleOffers/{productId} {
+      allow get, list: if signedIn() && (admin() || resource.data.sellerId == me() || get(/databases/$(database)/documents/users/$(me())).data.b2bStatus == 'approved');
+      allow write: if false;
+    }
+    match /posts/{postId} {
+      allow get, list: if resource.data.active == true
+        || (signedIn() && (resource.data.sellerId == me() || admin()));
+      allow write: if false;
+    }
+    match /lives/{liveId} {
+      allow get, list: if resource.data.status == 'live'
+        || (signedIn() && (resource.data.sellerId == me() || admin()));
+      allow write: if false;
+    }
+    match /orders/{orderId} {
+      allow get: if signedIn() && (resource.data.buyerId == me()
+        || me() in resource.data.sellerIds || admin());
+      // No collection-wide reads of private buyer addresses. The app uses callable queries.
+      allow list: if false;
+      allow write: if false;
+    }
+    match /buyerCodes/{orderId} {
+      allow get: if signedIn() && resource.data.buyerId == me();
+      allow list, write: if false;
+    }
+    match /deliveryRates/{rateId} { allow read, write: if false; }
+    match /payments/{paymentId} { allow read, write: if false; }
+    match /auditLogs/{logId} { allow read, write: if false; }
+    match /{document=**} { allow read, write: if false; }
+  }
+}
