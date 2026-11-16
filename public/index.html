@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="es"><head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff"><meta name="description" content="MERKA conecta la moda de Gamarra con compradores de todo el Perú.">
+  <title>MERKA — El marketplace del Perú real</title><link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="https://download.agora.io/sdk/release/AgoraRTC_N-4.23.4.js" defer></script>
+  <script type="module" src="/app.js"></script>
+</head><body>
+<div class="app-shell">
+ <header class="header"><div class="logo">MERKA</div><div class="header-actions"><button class="icon-btn" id="goSearch" aria-label="Buscar">⌕</button><button class="icon-btn bag" id="goBag" aria-label="Carrito">♧<span id="bagCount"></span></button></div></header>
+ <div id="networkNotice" class="notice hidden" role="status"></div>
+ <main id="view" aria-live="polite"><div class="welcome-state">Cargando MERKA…</div></main>
+ <nav class="bottom-nav" aria-label="Navegación principal">
+  <button data-tab="inicio" class="active"><span class="nav-icon">⌂</span><span>Inicio</span></button>
+  <button data-tab="videos"><span class="nav-icon">▣</span><span>Videos</span></button>
+  <button data-tab="live"><span class="nav-icon">◉</span><span>Live</span></button>
+  <button data-tab="tiendas"><span class="nav-icon">▤</span><span>Tiendas</span></button>
+  <button data-tab="perfil"><span class="nav-icon">♙</span><span>Perfil</span></button>
+ </nav>
+</div>
+<div id="overlay" class="overlay hidden" aria-live="polite"></div>
+<div id="toast" class="toast hidden" role="status"></div>
+</body></html>
