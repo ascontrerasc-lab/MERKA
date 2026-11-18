@@ -1,5 +1,16 @@
-// Cache only static presentation assets, never API responses, credentials or private data.
-const CACHE='merka-static-v1';const ASSETS=['/','/styles.css','/assets/icon.svg'];
-self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));
-self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
-self.addEventListener('fetch',e=>{const url=new URL(e.request.url);if(e.request.method==='GET'&&url.origin===location.origin&&['/','/styles.css','/assets/icon.svg'].includes(url.pathname))e.respondWith(fetch(e.request).catch(()=>caches.match(e.request)))});
+// MERKA PWA: cache de recursos publicos, compatible con /MERKA/ en GitHub Pages.
+// No guardar API, credenciales, contenido privado ni respuestas de Firebase.
+const CACHE='merka-static-pages-v2';
+const BASE=new URL(self.registration.scope);
+const ASSETS=['./','./styles.css','./assets/icon.svg'].map(path=>new URL(path,BASE).href);
+self.addEventListener('install',event=>event.waitUntil(
+  caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting())
+));
+self.addEventListener('activate',event=>event.waitUntil(
+  caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())
+));
+self.addEventListener('fetch',event=>{
+  if(event.request.method==='GET' && ASSETS.includes(event.request.url)) {
+    event.respondWith(fetch(event.request).catch(()=>caches.match(event.request)));
+  }
+});

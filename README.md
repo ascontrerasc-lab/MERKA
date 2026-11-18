@@ -1,18 +1,29 @@
-# MERKA — Aplicación web (PWA) y backend Firebase
+# MERKA — Aplicación y publicación en GitHub Pages
 
-Proyecto privado de MERKA. Esta rama contiene el **código técnico más reciente recuperado** (noviembre de 2026) y no debe confundirse con la demo visual independiente ni con una aplicación ya publicada.
+Repositorio de MERKA para conservar el código e implementar una **vista web de pruebas**.
 
-## Estructura
+## Carpetas
 
-- `public/`: sitio web MERKA (HTML, CSS, JS, iconos y PWA).
-- `functions/`: servicios de Firebase Cloud Functions.
-- `firestore.rules` y `storage.rules`: reglas de seguridad.
-- `firebase.json`: configuración Hosting, Functions, Firestore y Storage.
-- `LEEME_LANZAMIENTO.md`: pasos de configuración, pendientes y advertencias.
-- `INSTRUCCIONES_GITHUB_Y_FIREBASE.md`: guía para subir repositorio y publicar en staging.
+- `public/`: **sitio MERKA publicado en GitHub Pages**. Incluye interfaz, JS, configuración web Firebase, iconos y PWA.
+- `functions/`: backend Firebase recuperado (GitHub Pages **no** ejecuta este código).
+- `.github/workflows/publicar-merka.yml`: verifica la estructura y publica `public/` automáticamente.
+- `scripts/checks.py`: pruebas estáticas básicas; **no** equivale a pruebas funcionales completas.
+- `referencia_diseno/`: maquetas y diseño visual anterior como referencia, **no se publican**.
+- `firestore.rules`, `storage.rules`, `firebase.json`: configuración Firebase recuperada; **no se despliegan** con GitHub Pages.
+- `GUIA_PUBLICAR_SIN_TARJETA.md`: instrucciones paso a paso para publicar.
 
-## Estado
+## Enlace esperado
 
-**Base técnica pendiente de configurar y validar.** No hay pagos Yape con verificación automática, prueba virtual IA integrada ni APK/AAB firmado. No abrir ventas públicas sin cerrar requisitos de seguridad, operaciones y pruebas.
+Con el repositorio `ascontreras-lab/MERKA` publicado en GitHub Pages, la URL suele ser:
 
-**Importante:** no copiar ni publicar credenciales de administrador, secretos Agora o llaves privadas; este repositorio debe mantenerse privado. Usar un nuevo proyecto Firebase de pruebas: la rama actual no es totalmente compatible con la base anterior.
+`https://ascontreras-lab.github.io/MERKA/`
+
+Esta URL **no confirma** que el despliegue ya se haya realizado. Compruébalo en GitHub > Settings > Pages o en Actions.
+
+## Limitaciones y seguridad
+
+GitHub Pages solo sirve archivos estáticos; NO ejecuta `functions/`. El navegador puede intentar acceder a Firebase externo mediante `public/config.js`, pero el funcionamiento depende de que los servicios estén configurados, el dominio esté autorizado en Firebase Authentication, las reglas sean compatibles y exista un backend desplegado independientemente.
+
+**Advertencia:** la app apunta al Firebase original `merka-8a703`. Publicar esta web puede mostrar datos reales si las reglas de Firestore los hacen públicos. Nunca desplegar reglas, Functions ni realizar operaciones de prueba con datos de producción sin evaluar seguridad y respaldos. No usar para compras, reparto, pagos reales, Yape ni Live sin pruebas integrales.
+
+Los archivos del SDK web de Firebase no son llaves de administrador; no subir credenciales privadas.
